@@ -12,7 +12,12 @@
 
 $className = 'OA_UpgradePostscript_2_7_12_dev';
 
-require_once MAX_PATH . '/lib/OA/DB/Table.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Table.php',
+    )
+);
 
 class OA_UpgradePostscript_2_7_12_dev
 {

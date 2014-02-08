@@ -10,11 +10,17 @@
 +---------------------------------------------------------------------------+
 */
 
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Sql.php',
+        '/OA/Upgrade/Configuration.php',
+        '/util/file/file.php'
+    )
+);
+
 require_once MAX_PATH . '/etc/changes/migration_tables_core_108.php';
-require_once MAX_PATH . '/lib/OA/DB/Sql.php';
 require_once MAX_PATH . '/etc/changes/tests/unit/MigrationTest.php';
-require_once MAX_PATH . '/lib/OA/Upgrade/Configuration.php';
-require_once MAX_PATH . '/lib/util/file/file.php';
 
 define('TMP_GEOCONFIG_PATH', GEOCONFIG_PATH . '.tmp');
 
@@ -32,13 +38,13 @@ class Migration_tables_core_108Test extends MigrationTest
         parent::setUp();
         mkdir(MAX_PATH . '/var/plugins/config', 0777, true);
     }
-    
+
     function tearDown()
     {
-        Util_File_remove(MAX_PATH . '/var/plugins/config');        
+        Util_File_remove(MAX_PATH . '/var/plugins/config');
         parent::tearDown();
     }
-    
+
     function testMigrateData()
     {
         $prefix = $this->getPrefix();

@@ -10,7 +10,13 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/max/other/lib-acl.inc.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/max/other/lib-acl.inc.php'
+    )
+);
+
 //$oMessages initialized by runner OA_Upgrade::runPostUpgradeTask
 
 $oMessages->logInfo('Recompiling Acls');

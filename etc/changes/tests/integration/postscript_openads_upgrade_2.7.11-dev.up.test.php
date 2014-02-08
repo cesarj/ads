@@ -10,8 +10,13 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/OA/Dal/DataGenerator.php';
-require_once MAX_PATH.'/lib/OA/Upgrade/Upgrade.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/Dal/DataGenerator.php',
+        '/OA/Upgrade/Upgrade.php'
+    )
+);
 
 /**
  * 2.7.11-dev upgrade test

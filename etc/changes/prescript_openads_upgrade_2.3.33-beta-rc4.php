@@ -12,9 +12,7 @@
 
 require_once MAX_PATH . '/etc/changes/ConfigMigration.php';
 
-
 $className = 'OA_UpgradePrescript_2_3_33';
-
 
 class OA_UpgradePrescript_2_3_33
 {

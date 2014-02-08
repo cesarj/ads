@@ -12,8 +12,13 @@
 
 $className = 'OA_UpgradePostscript_2_8_1_rc4';
 
-require_once MAX_PATH . '/lib/OA/DB/Table.php';
-require_once MAX_PATH . '/lib/OA/Upgrade/UpgradeLogger.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Table.php',
+        '/OA/Upgrade/UpgradeLogger.php'
+    )
+);
 
 class OA_UpgradePostscript_2_8_1_rc4
 {
@@ -33,7 +38,7 @@ class OA_UpgradePostscript_2_8_1_rc4
 
         $this->oDbh = &OA_DB::singleton();
         $aConf = $GLOBALS['_MAX']['CONF']['table'];
-        
+
         $prefix = $aConf['prefix'];
         $tblBanners = $prefix.($aConf['banners'] ? $aConf['banners'] : 'banners');
         $tblAza = $prefix.($aConf['ad_zone_assoc'] ? $aConf['ad_zone_assoc'] : 'ad_zone_assoc');

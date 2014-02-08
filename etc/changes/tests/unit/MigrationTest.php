@@ -10,10 +10,16 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/OA/DB/Sql.php';
-require_once(MAX_PATH.'/lib/OA/Upgrade/UpgradeLogger.php');
-require_once MAX_PATH . '/lib/OA/Upgrade/DB_Upgrade.php';
-require_once MAX_PATH . '/lib/OA/Upgrade/DB_UpgradeAuditor.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Sql.php',
+        '/OA/Upgrade/DB_Upgrade.php',
+        '/OA/Upgrade/DB_UpgradeAuditor.php',
+        '/OA/Upgrade/UpgradeLogger.php'
+    )
+);
+
 require_once MAX_PATH . '/tests/testClasses/DbTestCase.php';
 
 define('TEST_CONFIG_PATH', MAX_PATH . '/etc/changes/tests/data/config_2_0_12.inc.php');
