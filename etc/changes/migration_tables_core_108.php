@@ -10,13 +10,18 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once(MAX_PATH.'/lib/OA/Upgrade/Migration.php');
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Sql.php',
+        '/OA/Upgrade/Migration.php',
+        '/OA/Upgrade/phpAdsNew.php'
+    )
+);
+
 require_once MAX_PATH . '/etc/changes/StatMigration.php';
-require_once(MAX_PATH.'/lib/OA/Upgrade/phpAdsNew.php');
-require_once(MAX_PATH.'/lib/OA/DB/Sql.php');
 
 define('GEOCONFIG_PATH', MAX_PATH . '/var/plugins/config/geotargeting');
-
 
 class Migration_108 extends Migration
 {

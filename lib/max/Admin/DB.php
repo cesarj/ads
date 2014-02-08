@@ -10,9 +10,13 @@
 +---------------------------------------------------------------------------+
 */
 
-// Required files
-require_once MAX_PATH . '/lib/OA/DB.php';
-require_once MAX_PATH . '/lib/OA/DB/Table/Core.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB.php',
+        '/OA/DB/Table/Core.php'
+    )
+);
 
 class Max_Admin_DB
 {

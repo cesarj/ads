@@ -10,7 +10,12 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/RV/Sync.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/RV/Sync.php'
+    )
+);
 
 /**
  * A class for testing the RV_Sync class.

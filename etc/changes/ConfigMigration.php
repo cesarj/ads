@@ -10,9 +10,14 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH.'/lib/max/Plugin.php';
-require_once MAX_PATH.'/lib/OA/Upgrade/Configuration.php';
-require_once MAX_PATH.'/lib/max/FileScanner.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/max/FileScanner.php',
+        '/max/Plugin.php',
+        '/OA/Upgrade/Configuration.php'
+    )
+);
 
 /**
  * Indicates all modules

@@ -10,11 +10,15 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/OA/Upgrade/Migration.php';
-require_once MAX_PATH . '/lib/OA/Upgrade/phpAdsNew.php';
-
-require_once LIB_PATH . '/OperationInterval.php';
-require_once OX_PATH . '/lib/wact/db/db.inc.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/Upgrade/Migration.php',
+        '/OA/Upgrade/phpAdsNew.php',
+        '/OX/OperationInterval.php',
+        '/wact/db/db.inc.php'
+    )
+);
 
 class StatMigration extends Migration
 {

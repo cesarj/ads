@@ -10,16 +10,17 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/Max.php';
-require_once MAX_PATH . '/lib/max/Dal/Inventory/Trackers.php';
-
-require_once MAX_PATH . '/lib/OA/ServiceLocator.php';
-
-require_once OX_PATH . '/lib/OX.php';
-require_once LIB_PATH . '/Admin/Redirect.php';
-require_once OX_PATH . '/lib/pear/HTML/Template/Flexy.php';
-
-
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/Max.php',
+        '/max/Dal/Inventory/Trackers.php',
+        '/OA/ServiceLocator.php',
+        '/OX.php',
+        '/OX/Admin/Redirect.php',
+        '/pear/HTML/Template/Flexy.php'
+    )
+);
 
 /**
  * A class for determining the available geotargeting modes.
@@ -150,7 +151,7 @@ class MAX_Admin_Inventory_TrackerAppend
             // Queue confirmation message
             $doTrackers = OA_Dal::factoryDO('trackers');
             $doTrackers->get($this->tracker_id);
-  
+
             $translation = new OX_Translation();
             $translated_message = $translation->translate ( $GLOBALS['strTrackerAppendHasBeenUpdated'], array(
                 MAX::constructURL(MAX_URL_ADMIN, "tracker-edit.php?clientid=".$this->advertiser_id."&trackerid=".$this->tracker_id),

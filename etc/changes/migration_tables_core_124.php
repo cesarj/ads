@@ -10,12 +10,12 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/OA/Upgrade/Migration.php';
-
-// following does not seem to be required?
-//require_once MAX_PATH . '/lib/max/Delivery/limitations.delivery.php';
-//require_once MAX_PATH . '/lib/max/other/lib-acl.inc.php';
-//require_once MAX_PATH . '/lib/wact/db/db.inc.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/Upgrade/Migration.php',
+    )
+);
 
 class Migration_124 extends Migration
 {

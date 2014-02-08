@@ -21,6 +21,18 @@ class RV
 {
 
     /**
+     * A method to conveniently load library files (i.e. files located in the
+     * RV_PATH . '/lib' directory.
+     *
+     * @static
+     */
+    function require_lib($aArray) {
+        foreach ($aArray as $library) {
+            require_once RV_PATH . '/lib' . $library;
+        }
+    }
+
+    /**
      * A method to get the Revive Adserver configuration file details.
      *
      * @static

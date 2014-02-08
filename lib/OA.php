@@ -11,9 +11,14 @@
 */
 
 ###START_STRIP_DELIVERY
-require_once MAX_PATH . '/lib/pear/Log.php';
-require_once MAX_PATH . '/lib/pear/PEAR.php';
-require_once MAX_PATH . '/lib/OX/Admin/Timezones.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/pear/Log.php',
+        '/pear/PEAR.php',
+        '/OX/Admin/Timezones.php'
+    )
+);
 
 /**
  * this is a method to capture select queries and write them to a logfile

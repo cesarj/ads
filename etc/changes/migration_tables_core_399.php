@@ -10,8 +10,14 @@
 +---------------------------------------------------------------------------+
 */
 
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/Upgrade/Migration.php',
+    )
+);
+
 require_once MAX_PATH . '/etc/changes/StatMigration.php';
-require_once(MAX_PATH.'/lib/OA/Upgrade/Migration.php');
 
 class Migration_399 extends Migration
 {

@@ -10,8 +10,13 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH.'/lib/OA/Upgrade/Migration.php';
-require_once MAX_PATH.'/lib/OA/Dal.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/Dal.php',
+        '/OA/Upgrade/Migration.php',
+    )
+);
 
 class Migration_609 extends Migration
 {

@@ -10,7 +10,12 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/max/language/Loader.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/max/language/Loader.php'
+    )
+);
 
 /**
  * A class for determining the available delivery caching modes.
@@ -37,7 +42,7 @@ class MAX_Admin_Cache
         }
         return $modes;
     }
-    
+
 }
 
 ?>

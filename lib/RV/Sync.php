@@ -10,11 +10,16 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/OA.php';
-require_once MAX_PATH . '/lib/OA/DB.php';
-require_once MAX_PATH . '/lib/OA/Dal/ApplicationVariables.php';
-require_once MAX_PATH . '/lib/OA/Central.php';
-require_once MAX_PATH . '/lib/pear/Date.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA.php',
+        '/OA/DB.php',
+        '/OA/Central.php',
+        '/OA/Dal/ApplicationVariables.php',
+        '/pear/Date.php'
+    )
+);
 
 /**
  * A class to deal with the services provided by Revive Adserver Sync
