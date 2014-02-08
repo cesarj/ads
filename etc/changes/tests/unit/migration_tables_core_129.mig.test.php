@@ -10,8 +10,14 @@
 +---------------------------------------------------------------------------+
 */
 
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Sql.php'
+    )
+);
+
 require_once MAX_PATH . '/etc/changes/migration_tables_core_129.php';
-require_once MAX_PATH . '/lib/OA/DB/Sql.php';
 require_once MAX_PATH . '/etc/changes/tests/unit/MigrationTest.php';
 
 /**

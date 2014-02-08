@@ -10,10 +10,7 @@
 +---------------------------------------------------------------------------+
 */
 
-// require_once MAX_PATH . '/lib/OA/Dal.php';
 require_once MAX_PATH . '/etc/changes/tests/unit/MigrationTest.php';
-// require_once MAX_PATH . '/lib/OA/Upgrade/Upgrade.php';
-
 require_once MAX_PATH . '/etc/changes/postscript_openads_upgrade_2.5.67-beta-rc8.php';
 
 

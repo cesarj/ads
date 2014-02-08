@@ -15,14 +15,17 @@
  *
  */
 
-require_once MAX_PATH . '/lib/OA.php';
-require_once MAX_PATH . '/lib/OA/Dal/PasswordRecovery.php';
-require_once MAX_PATH . '/lib/OA/Auth.php';
-require_once MAX_PATH . '/lib/OA/Email.php';
-require_once MAX_PATH . '/lib/OA/ServiceLocator.php';
-
-require_once LIB_PATH . '/Admin/Redirect.php';
-
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA.php',
+        '/OA/Auth.php',
+        '/OA/Dal/PasswordRecovery.php',
+        '/OA/Email.php',
+        '/OA/ServiceLocator.php',
+        '/OX/Admin/Redirect.php'
+    )
+);
 
 class OA_Admin_PasswordRecovery
 {

@@ -10,9 +10,14 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/etc/changes/ConfigMigration.php';
-require_once MAX_PATH . '/lib/util/file/file.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/util/file/file.php'
+    )
+);
 
+require_once MAX_PATH . '/etc/changes/ConfigMigration.php';
 
 /**
  * Test for ConfigMigration class.

@@ -10,7 +10,12 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/OA/Admin/Menu/tests/unit/MenuTestCase.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/Admin/Menu/tests/unit/MenuTestCase.php'
+    )
+);
 
 /**
  * A class for testing the OA_Admin_Menu class.

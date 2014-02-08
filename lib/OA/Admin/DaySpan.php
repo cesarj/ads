@@ -10,7 +10,12 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/pear/Date.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/pear/Date.php'
+    )
+);
 
 /**
  * A class to deal with day-based spans, for use in statistics screens, etc.

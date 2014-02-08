@@ -10,7 +10,13 @@
 +---------------------------------------------------------------------------+
 */
 
-require_once MAX_PATH . '/lib/max/Plugin/Common.php';
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/max/Plugin/Common.php'
+    )
+);
+
 require_once 'Spreadsheet/Excel/Writer.php';
 
 /**

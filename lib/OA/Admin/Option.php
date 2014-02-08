@@ -10,11 +10,15 @@
 +---------------------------------------------------------------------------+
 */
 
-// Required files
-require_once MAX_PATH . '/lib/OA/Admin/Settings.php';
-require_once MAX_PATH . '/lib/OA/Admin/Template.php';
-require_once MAX_PATH . '/lib/max/language/Loader.php';
-require_once(MAX_PATH.'/lib/OA/Cache.php');
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/max/language/Loader.php',
+        '/OA/Admin/Settings.php',
+        '/OA/Admin/Template.php',
+        '/OA/Cache.php'
+    )
+);
 
 /**
  * A class to deal with the display of settings and preferences

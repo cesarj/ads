@@ -10,10 +10,16 @@
 +---------------------------------------------------------------------------+
 */
 
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Sql.php',
+        '/OA/Dal/DataGenerator.php',
+    )
+);
+
 require_once MAX_PATH . '/etc/changes/postscript_openads_upgrade_2.7.30-beta-rc5.php';
-require_once MAX_PATH . '/lib/OA/DB/Sql.php';
 require_once MAX_PATH . '/etc/changes/tests/unit/MigrationTest.php';
-require_once MAX_PATH . '/lib/OA/Dal/DataGenerator.php';
 
 
 /**

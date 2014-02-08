@@ -10,11 +10,17 @@
 +---------------------------------------------------------------------------+
 */
 
+require_once RV_PATH . '/lib/RV.php';
+RV::require_lib(
+    array(
+        '/OA/DB/Sql.php',
+        '/OA/Dal/DataGenerator.php',
+        '/OA/Upgrade/Configuration.php'
+    )
+);
+
 require_once MAX_PATH . '/etc/changes/migration_tables_core_546.php';
-require_once MAX_PATH . '/lib/OA/DB/Sql.php';
 require_once MAX_PATH . '/etc/changes/tests/unit/MigrationTest.php';
-require_once MAX_PATH . '/lib/OA/Dal/DataGenerator.php';
-require_once(MAX_PATH. '/lib/OA/Upgrade/Configuration.php');
 
 /**
  * Test for migration class #546 that check that the old preferences
