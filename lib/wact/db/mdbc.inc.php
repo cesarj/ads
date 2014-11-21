@@ -16,7 +16,7 @@ $GLOBALS['DatabaseConnectionObjList'] = array();
 class MDBC_ConnectionConfiguration {
 
     var $config_name;
-    
+
     function MDBC_ConnectionConfiguration($config_name) {
         $this->config_name = $config_name;
     }
@@ -34,30 +34,30 @@ class MDBC_ConnectionConfiguration {
 * @access public
 * @package WACT_DB
 */
-class MDBC { 
+class MDBC {
 
     /**
     * Create a new connection based on a named database configuration
     * @return Connection reference
     * @access public
     */
-    function &newConnection($name) {
+    function newConnection($name) {
         $ConnectionConfiguration = new MDBC_ConnectionConfiguration($name);
         $driver = $ConnectionConfiguration->get("driver");
-        $ConnectionClass = $driver . 'Connection'; 
+        $ConnectionClass = $driver . 'Connection';
 
-        require_once(WACT_ROOT . 'db/drivers/' . $driver . '.inc.php'); 
+        require_once(WACT_ROOT . 'db/drivers/' . $driver . '.inc.php');
         return new $ConnectionClass($ConnectionConfiguration);
-    } 
+    }
 
     /**
     * Return a named database connection managed by this class
     * @return Connection reference
     * @access public
     */
-    function &getConnection($name) {
+    function getConnection($name) {
         if (!isset($GLOBALS['DatabaseConnectionObjList'][$name])) {
-            $GLOBALS['DatabaseConnectionObjList'][$name] =& MDBC::newConnection($name);
+            $GLOBALS['DatabaseConnectionObjList'][$name] = MDBC::newConnection($name);
         }
         return $GLOBALS['DatabaseConnectionObjList'][$name];
     }

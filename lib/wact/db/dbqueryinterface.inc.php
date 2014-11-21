@@ -35,7 +35,7 @@
 *         }
 *
 *         // Update the blob field with the binary data - see ADOdb oci8 driver
-*         $res = & $conn->UpdateBlob('images','content',$this->blob,
+*         $res = $conn->UpdateBlob('images','content',$this->blob,
 *             "filename='.$this->filename.'",'BLOB');
 *
 *         return $res;
@@ -63,7 +63,7 @@ class DBCQueryInterface {
 	* @return mixed result object or result resource, depending on DB driver used
 	* @access public
 	*/
-	function &execute(& $conn) {}
+	function execute(& $conn) {}
 
 }
 

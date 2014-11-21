@@ -24,7 +24,7 @@ interface Connection {
 	* @return string literal SQL fragment
 	*/
 	function makeLiteral($value, $type = NULL);
-	
+
     /**
     * Factory function to create a Record object
     * @see http://wact.sourceforge.net/index.php/NewRecord
@@ -32,7 +32,7 @@ interface Connection {
     *   used to initialize the fields of the new record prior to calling insert()
     * @return Record reference
     */
-    function &NewRecord($DataSpace = NULL);
+    function NewRecord($DataSpace = NULL);
 
     /**
     * Factory function used to retrieve more than one row from a MySQL database,
@@ -42,7 +42,7 @@ interface Connection {
     * @param object filter class (optional)
     * @return RecordSet reference
     */
-    function &NewRecordSet($query, $filter = NULL);
+    function NewRecordSet($query, $filter = NULL);
 
     /**
     * Factory function used to retrieve more than one row from a MySQL database,
@@ -53,14 +53,14 @@ interface Connection {
     * @param object filter class (optional)
     * @return RecordSet reference
     */
-    function &NewPagedRecordSet($query, &$pager, $filter = NULL);
+    function NewPagedRecordSet($query, &$pager, $filter = NULL);
 
 	/**
 	* Retreive a single record from the database based on a query.
 	* @param string SQL Query
 	* @return Record object or NULL if not found
 	*/
-	function &FindRecord($query);
+	function FindRecord($query);
 
 	/**
 	* Get a single value from the first column of a single record from
@@ -84,7 +84,7 @@ interface Connection {
 	* @param string SQL Query
 	*/
 	function getTwoColumnArray($query);
-	
+
 	/**
 	* Performs any query that does not return a cursor.
 	* @param string SQL query

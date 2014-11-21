@@ -49,8 +49,8 @@ class MDB2Connection {
 	* @param object Connection Configuration information
 	* @access private
 	*/
-	function MDB2Connection(&$config) {
-		$this->config =& $config;
+	function MDB2Connection($config) {
+		$this->config = $config;
 	}
 
 	/**
@@ -58,7 +58,7 @@ class MDB2Connection {
 	* @return object subclass of PEAR::MDB2_Common
 	* @access protected
 	*/
-	function & getConnectionId() {
+	function getConnectionId() {
 		if (!isset($this->ConnectionId)) {
 			$this->connect();
 		}
@@ -72,7 +72,7 @@ class MDB2Connection {
 	*/
 	function connect() {
 	    // use existing connection
-	    $dbh = &OA_DB::singleton();
+	    $dbh = OA_DB::singleton();
 
 	    if (PEAR::isError($dbh)) {
 	        $this->RaiseError();
@@ -132,10 +132,10 @@ class MDB2Connection {
 		}
 		switch (strtolower($type)) {
             case 'string':
-                $conn = & $this->getConnectionId();
+                $conn = $this->getConnectionId();
                 return $conn->quote($value, 'text');
             case 'boolean':
-                $conn = & $this->getConnectionId();
+                $conn = $this->getConnectionId();
                 //return $conn->quote($value, 'boolean');
                 return $conn->quote($value, 'integer');
             case 'null':
@@ -153,7 +153,7 @@ class MDB2Connection {
 	* @return Record reference
 	* @access public
 	*/
-	function &NewRecord($DataSpace = NULL) {
+	function NewRecord($DataSpace = NULL) {
 		$Record = new MDB2Record($this);
 		if (!is_null($DataSpace)) {
 			$Record->import($DataSpace->export());
@@ -170,7 +170,7 @@ class MDB2Connection {
 	* @return RecordSet reference
 	* @access public
 	*/
-	function &NewRecordSet($query, $filter = NULL) {
+	function NewRecordSet($query, $filter = NULL) {
 		$RecordSet = new MDB2RecordSet($this, $query);
 		if (!is_null($filter)) {
 			$RecordSet->registerFilter($filter);
@@ -188,8 +188,8 @@ class MDB2Connection {
 	* @return RecordSet reference
 	* @access public
 	*/
-	function &NewPagedRecordSet($query, &$pager, $filter = NULL) {
-		$RecordSet =& $this->NewRecordSet($query, $filter);
+	function NewPagedRecordSet($query, &$pager, $filter = NULL) {
+		$RecordSet = $this->NewRecordSet($query, $filter);
 		$RecordSet->paginate($pager);
 		return $RecordSet;
 	}
@@ -200,10 +200,10 @@ class MDB2Connection {
 	* @return Record object or NULL if not found
 	* @access public
 	*/
-	function &FindRecord($query) {
+	function FindRecord($query) {
 		$Record = new MDB2Record($this);
 		$QueryId = $this->_execute($query);
-		$Record->properties =& $QueryId->fetchRow(MDB2_FETCHMODE_ASSOC);
+		$Record->properties = $QueryId->fetchRow(MDB2_FETCHMODE_ASSOC);
 		$QueryId->free();
 		if (is_array($Record->properties)) {
 			return $Record;
@@ -275,8 +275,8 @@ class MDB2Connection {
 	       // supress any PEAR errors as we are handling them anyway in RaiseError method
 	       PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
 	    }
-		$conn = & $this->getConnectionId();
-		$result = & $conn->query($sql);
+		$conn = $this->getConnectionId();
+		$result = $conn->query($sql);
 	    if (!empty($conf['debug']['production'])) {
 		  PEAR::staticPopErrorHandling();
 	    }
@@ -324,8 +324,8 @@ class MDB2Record extends DataSpace {
 	* @param MDB2Connection
 	* @access protected
 	*/
-	function MDB2Record(& $Connection) {
-		$this->Connection = & $Connection;
+	function MDB2Record($Connection) {
+		$this->Connection = $Connection;
 	}
 
 	/**
@@ -433,7 +433,7 @@ class MDB2Record extends DataSpace {
 	* @access public
 	*/
 	function getAffectedRowCount() {
-		$QueryId = & $this->Connection->getConnectionId();
+		$QueryId = $this->Connection->getConnectionId();
 		return $QueryId->affectedRows();
 	}
 
@@ -515,8 +515,8 @@ class MDB2RecordSet extends MDB2Record {
 	* @return void
 	* @access public
 	*/
-	function paginate(&$pager) {
-		$this->pager =& $pager;
+	function paginate($pager) {
+		$this->pager = $pager;
 		$pager->setPagedDataSet($this);
 	}
 
@@ -539,7 +539,7 @@ class MDB2RecordSet extends MDB2Record {
 	*/
 	function reset() {
 		if (isset($this->pager)) {
-			$conn = & $this->Connection->getConnectionId();
+			$conn = $this->Connection->getConnectionId();
 			$conn->setLimit(
 			    $this->pager->getItemsPerPage(),
 			    $this->pager->getStartingItem()

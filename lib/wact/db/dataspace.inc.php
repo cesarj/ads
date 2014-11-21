@@ -56,7 +56,7 @@ class DataSpace {
             return $this->get($path);
         } else {
             $value = $this->get(substr($path, 0, $pos));
-            $dataspace =& DataSpace::makeDataSpace($value);
+            $dataspace = DataSpace::makeDataSpace($value);
             if (is_null($dataspace)) {
                 return NULL;
             }
@@ -78,7 +78,7 @@ class DataSpace {
     /**
     * Stores a copy of value into a Property based on a dot separated
     * path.
-    * If an element cannot be dereferenced, or is not set, it is 
+    * If an element cannot be dereferenced, or is not set, it is
     * converted to an array.
     * @param string name of property
     * @param mixed value of property
@@ -89,7 +89,7 @@ class DataSpace {
         if (strpos($path, '.') == FALSE) {
             return $this->set($path, $value);
         }
-        $var =& $this->properties;
+        $var = $this->properties;
         do {
             $pos = strpos($path, '.');
             if ($pos === FALSE) {
@@ -101,13 +101,13 @@ class DataSpace {
                 if (method_exists($var, 'isDataSource')) {
                     return $var->setPath($path, $value);
                 } else {
-                    $var =& $var->$key;
+                    $var = $var->$key;
                 }
             } else if (is_array($var)) {
-                $var =& $var[$key];
+                $var = $var[$key];
             } else {
                 $var = array();
-                $var =& $var[$key];
+                $var = $var[$key];
             }
             $path = substr($path, $pos + 1);
         } while (TRUE);
@@ -134,7 +134,7 @@ class DataSpace {
     function remove($name) {
         unset($this->properties[$name]);
     }
-    
+
     /**
     * removes all property values
     * @return void
@@ -197,7 +197,7 @@ class DataSpace {
     function hasProperty($name) {
         return isset($this->properties[$name]);
     }
-    
+
     /**
     * Return a unique list of available properties
     * This method is probably going to have capitalization problems.
@@ -217,7 +217,7 @@ class DataSpace {
     * @deprecated
     */
     function registerFilter(&$filter) {
-        $this->filter =& $filter;
+        $this->filter = $filter;
     }
 
     /**
@@ -253,7 +253,7 @@ class DataSpace {
             return NULL;
         }
     }
-    
+
    /**
 	 * Below methods are added to provide a common interface between DataObjects and DAL
 	 * @return boolean
@@ -263,7 +263,7 @@ class DataSpace {
 	{
 	    return $this->next();
 	}
-	
+
 	/**
 	 * Reset RecordSet
 	 *
@@ -281,7 +281,7 @@ class DataSpace {
 	    }
 	    return true;
 	}
-	
+
 	/**
 	 * Export parameters as array
 	 *
@@ -292,9 +292,9 @@ class DataSpace {
 	{
 	    return $this->export();
 	}
-	
+
 	/**
-     * OpenX uses in many places arrays containing all records, for example 
+     * OpenX uses in many places arrays containing all records, for example
      * array of all zones Ids associated with specific advertiser.
      * It is not encouraged to use this method for all purposes as it's
      * better to loop through all records and analyze one at a time.
@@ -313,15 +313,15 @@ class DataSpace {
     	    if (empty($filter)) $filter = array();
     	    $filter = array($filter);
     	}
-    	
+
         $this->find();
-    	
+
     	$rows = array();
     	$primaryValue = null;
-    	
+
     	while ($this->fetch()) {
     	    $fields = $this->export();
-    	    
+
     		$row = array();
     		foreach ($fields as $k => $v) {
     		    if ($filter && !in_array($k, $filter)) {

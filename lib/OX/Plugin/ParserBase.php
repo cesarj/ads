@@ -42,18 +42,6 @@ class OX_ParserBase extends XML_Parser
     var $count = 0;
     var $error;
 
-    function __construct()
-    {
-        // force ISO-8859-1 due to different defaults for PHP4 and PHP5
-        // todo: this probably needs to be investigated some more andcleaned up
-        parent::XML_Parser('ISO-8859-1');
-    }
-
-    function OX_ParserBase()
-    {
-        $this->__construct();
-    }
-
     private function _initArray()
     {
         $this->aSettings  = array();
