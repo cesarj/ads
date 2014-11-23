@@ -2514,20 +2514,16 @@ class DB_DataObject extends DB_DataObject_Overload
      * @access private
      * @return DataObject|PEAR_Error
      */
-    function factory($table = '') {
+    static function factory($table = '') {
         global $_DB_DATAOBJECT;
         if (empty($_DB_DATAOBJECT['CONFIG'])) {
             DB_DataObject::_loadConfig();
         }
 
         if ($table === '') {
-            if (is_a($this,'DB_DataObject') && strlen($this->__table)) {
-                $table = $this->__table;
-            } else {
-                return DB_DataObject::raiseError(
-                    "factory did not recieve a table name",
-                    DB_DATAOBJECT_ERROR_INVALIDARGS);
-            }
+            return DB_DataObject::raiseError(
+                "factory did not recieve a table name",
+                DB_DATAOBJECT_ERROR_INVALIDARGS);
         }
 
 
@@ -2570,7 +2566,7 @@ class DB_DataObject extends DB_DataObject_Overload
      * @access private
      * @return string classname on Success
      */
-    function _autoloadClass($class)
+    static function _autoloadClass($class)
     {
         global $_DB_DATAOBJECT;
 
@@ -2627,7 +2623,7 @@ class DB_DataObject extends DB_DataObject_Overload
     }
 
     // NEW METHOD FOR PLUGINS
-    function findTableFile($location, $table)
+    static function findTableFile($location, $table)
     {
         if (strpos($location,'%s') !== false)
         {
@@ -3991,14 +3987,14 @@ class DB_DataObject extends DB_DataObject_Overload
      * @access public
      * @return error object
      */
-    function raiseError($message, $type = null, $behaviour = null)
+    static function raiseError($message, $type = null, $behaviour = null)
     {
         global $_DB_DATAOBJECT;
 
         if ($behaviour == PEAR_ERROR_DIE && !empty($_DB_DATAOBJECT['CONFIG']['dont_die'])) {
             $behaviour = null;
         }
-        $error = &PEAR::getStaticProperty('DB_DataObject','lastError');
+        $error = PEAR::getStaticProperty('DB_DataObject','lastError');
 
         // this will never work totally with PHP's object model.
         // as this is passed on static calls (like staticGet in our case)
@@ -4036,7 +4032,7 @@ class DB_DataObject extends DB_DataObject_Overload
      * @access   public
      * @return   object an error object
      */
-    function _loadConfig()
+    static function _loadConfig()
     {
         global $_DB_DATAOBJECT;
 

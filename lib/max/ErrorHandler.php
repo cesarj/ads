@@ -93,7 +93,7 @@ class MAX_ErrorHandler
         $conf = $GLOBALS['_MAX']['CONF'];
         // do not show notices
         if ($conf['debug']['errorOverride'] == true) {
-            if ($errNo == E_NOTICE || $errNo >= E_STRICT) {
+            if ($errNo == E_NOTICE) {
                 return null;
             }
         }

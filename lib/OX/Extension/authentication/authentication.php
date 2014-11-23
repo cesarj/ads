@@ -96,7 +96,7 @@ class Plugins_Authentication extends OX_Component
      * @param string $password
      * @return mixed A DataObjects_Users instance, or false if no matching user was found
      */
-    function checkPassword($username, $password)
+    static function checkPassword($username, $password)
     {
         $doUser = OA_Dal::factoryDO('users');
         $doUser->username = strtolower($username);

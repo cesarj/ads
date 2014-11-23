@@ -63,7 +63,7 @@ class OA_Dal
      * @return DB_DataObjectCommon The appropriate DB_DataObjectCommon implementaion,
      *                             or false on error.
      */
-    function factoryDO($table)
+    static function factoryDO($table)
     {
         OA_Dal::_setupDataObjectOptions();
         $do = DB_DataObject::factory($table);
@@ -199,7 +199,7 @@ class OA_Dal
      * @static
      * @access private
      */
-    function _setupDataObjectOptions($fromCache = true)
+    static function _setupDataObjectOptions($fromCache = true)
     {
         static $needsSetup;
         if (isset($needsSetup) && $fromCache) {
@@ -411,11 +411,11 @@ class OA_Dal
         if (!$fp) {
             return MAX::raiseError('Error creating the tmp file '.$filePath.' containing the batch INSERTs.', PEAR_ERROR_RETURN);
         }
-        
-        // ensure that when maintenance is run in crontab, as root eg. 
+
+        // ensure that when maintenance is run in crontab, as root eg.
         // the file can still be overwritten by maintenance ran from the UI
         @chmod($filePath, 0777);
-        
+
         foreach ($aValues as $aRow) {
             // Stringify row
             $row = '';
@@ -454,9 +454,9 @@ class OA_Dal
         	$fieldList
         ";
         $result = $oDbh->exec($query);
-        
+
         @unlink($filePath);
-        
+
         // Enable error handler again
         OX::enableErrorHandling();
 
@@ -487,7 +487,7 @@ class OA_Dal
 
         // we start by manually deleting conflicting unique rows
         foreach ($aValues as $aRow) {
-            // because Postgresql doesn't have the REPLACE keyword, 
+            // because Postgresql doesn't have the REPLACE keyword,
             // we manually delete the rows with the primary key first
             if($replace) {
                 $where = '';

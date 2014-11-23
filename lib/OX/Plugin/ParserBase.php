@@ -243,7 +243,7 @@ class OX_ParserBase extends XML_Parser
         }
     }
 
-    function raiseError($msg = null, $xmlecode = 0, $xp = null, $ecode = OX_PLUGIN_ERROR_PARSE)
+    static function raiseError($msg = null, $xmlecode = 0, $xp = null, $ecode = OX_PLUGIN_ERROR_PARSE)
     {
 		if (is_null($this->error))
         {

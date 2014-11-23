@@ -815,7 +815,7 @@ class OA_Permission
      * @static
      * @return OA_Permission_User on success or false otherwise
      */
-    public static function &getCurrentUser()
+    public static function getCurrentUser()
     {
         global $session;
         if (isset($session['user'])) {

@@ -670,20 +670,12 @@ class DB_DataObjectCommon extends DB_DataObject
      * Override parent method to make sure that newly created dataobject
      * is properly initialized with prefixes.
      *
-     * @param  string  $table  tablename (use blank to create a new instance of the same class.)
+     * @param  string  $table  tablename
      * @access private
      * @return DataObject|PEAR_Error
      */
-    function factory($table = '')
+    static function factory($table)
     {
-        if (isset($this) && !empty($this->_prefix)) {
-            $table = $this->getTableWithoutPrefix($table);
-            $do = parent::factory($table);
-            if (!PEAR::isError($do)) {
-                $do->init();
-            }
-            return $do;
-        }
         $ret = parent::factory($table);
         $ret->init();
         return $ret;
@@ -988,7 +980,7 @@ class DB_DataObjectCommon extends DB_DataObject
         return parent::_connect();
     }
 
-    function _loadConfig()
+    static function _loadConfig()
     {
         global $_DB_DATAOBJECT;
 
