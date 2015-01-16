@@ -1570,10 +1570,9 @@ class Date_Calc
     */
     function getMonthFromFullName($month)
     {
-        $month = strtolower($month);
         $months = Date_Calc::getMonthNames();
         while(list($id, $name) = each($months)) {
-            if (ereg($month, strtolower($name))) {
+            if (stripos($name, $month) === 0) {
                 return($id);
             }
         }

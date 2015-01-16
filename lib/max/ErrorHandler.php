@@ -191,7 +191,7 @@ EOF;
 
 	        //  get the source ## core dump in windows, scrap colour highlighting :-(
 	        //  $source = highlight_file($file, true);
-	        //  $lines = split("<br />", $source);
+	        //  $lines = explode("<br />", $source);
 	        //  get line numbers
 	        $start = $line - $this->sourceContextOptions['lines'] - 1;
 	        $finish = $line + $this->sourceContextOptions['lines'];

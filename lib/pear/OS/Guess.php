@@ -327,8 +327,9 @@ class OS_Guess
     function _matchFragment($fragment, $value)
     {
         if (strcspn($fragment, '*?') < strlen($fragment)) {
-            $reg = '^' . str_replace(array('*', '?', '/'), array('.*', '.', '\\/'), $fragment) . '$';
-            return eregi($reg, $value);
+            $reg = preg_quote($fragment, '#');
+            $reg = str_replace(array('\\*', '\\?'), array('.*', '.'), $reg);
+            return preg_match("#^{$reg}$#Di", $value);
         }
         return ($fragment == '*' || !strcasecmp($fragment, $value));
     }

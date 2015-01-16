@@ -120,7 +120,7 @@
   define( 'PCLZIP_OPT_NO_COMPRESSION', 77007 );
   define( 'PCLZIP_OPT_BY_NAME', 77008 );
   define( 'PCLZIP_OPT_BY_INDEX', 77009 );
-  define( 'PCLZIP_OPT_BY_EREG', 77010 );
+  //define( 'PCLZIP_OPT_BY_EREG', 77010 );
   define( 'PCLZIP_OPT_BY_PREG', 77011 );
   define( 'PCLZIP_OPT_COMMENT', 77012 );
   define( 'PCLZIP_OPT_ADD_COMMENT', 77013 );
@@ -1041,7 +1041,7 @@
       // ----- Parse the options
       $v_result = $this->privParseOptions($v_arg_list, $v_size, $v_options,
                                         array (PCLZIP_OPT_BY_NAME => 'optional',
-                                               PCLZIP_OPT_BY_EREG => 'optional',
+                                               // PCLZIP_OPT_BY_EREG => 'optional',
                                                PCLZIP_OPT_BY_PREG => 'optional',
                                                PCLZIP_OPT_BY_INDEX => 'optional' ));
       if ($v_result != 1) {
@@ -1556,7 +1556,7 @@
         break;
 
         // ----- Look for options that request an EREG or PREG expression
-        case PCLZIP_OPT_BY_EREG :
+        //case PCLZIP_OPT_BY_EREG :
         case PCLZIP_OPT_BY_PREG :
         //case PCLZIP_OPT_CRYPT :
           // ----- Check the number of parameters
@@ -3361,7 +3361,7 @@
               }
           }
       }
-
+/*
       // ----- Look for extract by ereg rule
       else if (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
@@ -3372,7 +3372,7 @@
               $v_extract = true;
           }
       }
-
+*/
       // ----- Look for extract by preg rule
       else if (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
                && ($p_options[PCLZIP_OPT_BY_PREG] != "")) {
@@ -4806,7 +4806,7 @@
               }
           }
       }
-
+/*
       // ----- Look for extract by ereg rule
       else if (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
@@ -4817,7 +4817,7 @@
               $v_found = true;
           }
       }
-
+*/
       // ----- Look for extract by preg rule
       else if (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
                && ($p_options[PCLZIP_OPT_BY_PREG] != "")) {

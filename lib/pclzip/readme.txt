@@ -141,11 +141,9 @@
                     Please carefully read the readme file.
     - Add the ability to delete by Index, name and regular expression. This feature is
       performed by the method delete(), which uses the optional parameters
-      PCLZIP_OPT_BY_INDEX, PCLZIP_OPT_BY_NAME, PCLZIP_OPT_BY_EREG or PCLZIP_OPT_BY_PREG.
+      PCLZIP_OPT_BY_INDEX, PCLZIP_OPT_BY_NAME, PCLZIP_OPT_BY_PREG.
     - Add the ability to extract by regular expression. To extract by regexp you must use the method
-      extract(), with the option PCLZIP_OPT_BY_EREG or PCLZIP_OPT_BY_PREG
-      (depending if you want to use ereg() or preg_match() syntax) followed by the
-      regular expression pattern.
+      extract(), with the option PCLZIP_OPT_BY_PREG followed by the regular expression pattern.
     - Add the ability to extract by index, directly with the extract() method. This is a
       code improvment of the extractByIndex() method.
     - Add the ability to extract by name. To extract by name you must use the method
