@@ -584,7 +584,7 @@ require_once MAX_PATH . '/lib/OA/Upgrade/Upgrade.php';
             if (array_key_exists($nameNew, $aExpectations))
             {
                 // Deal with the conversion of display/don't display values in column preferences
-                if (ereg('ui_column_', $newName)) {
+                if (preg_match('/ui_column_/D', $newName)) {
                     if ($aExpectations[$nameNew]['value'] == 0) {
                         $value = '';
                     } else if ($aExpectations[$nameNew]['value'] == 1) {

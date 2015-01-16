@@ -107,7 +107,7 @@ class DataObjects_Images extends DB_DataObjectCommon
         $extension = substr($this->filename, strrpos($this->filename, ".") + 1);
 	    $base	   = substr($this->filename, 0, strrpos($this->filename, "."));
 
-        if (eregi("^(.*)_([0-9]+)$", $base, $matches)) {
+        if (preg_match("/^(.*)_([0-9]+)$/Di", $base, $matches)) {
 			$base = $matches[1];
 			$i = $matches[2];
         }
