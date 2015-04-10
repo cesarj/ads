@@ -92,6 +92,19 @@
                         data.referer = doc.referrer;
                     }
 
+                    // Dispatch an event so that 3rd parties can hook into delivery
+                    // using, e.g.:
+                    // document.addEventListener('revive-1234567890abcdef-data', function (e) {
+                    //   e.detail['custom-var'] = 'foobar';
+                    // });
+                    try {
+                        var evt = doc.createEvent('CustomEvent');
+                        evt.initCustomEvent(rv.name + "-" + ID + "-data", false, false, data);
+                        doc.dispatchEvent(evt);
+                    } catch (e) {
+                        // Failure is not an acceptable option
+                    }
+
                     rv.ajax(url, data);
                 }
             },
