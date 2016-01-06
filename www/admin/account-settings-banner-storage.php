@@ -18,8 +18,10 @@ require_once MAX_PATH . '/lib/OA/Admin/Option.php';
 require_once MAX_PATH . '/lib/OA/Admin/Settings.php';
 
 require_once MAX_PATH . '/lib/max/Plugin/Translation.php';
-require_once MAX_PATH . '/www/admin/config.php';
 
+require_once MAX_PATH . '/lib/RV/Misc/UploadLimits.php';
+
+require_once MAX_PATH . '/www/admin/config.php';
 
 // Security check
 OA_Permission::enforceAccount(OA_ACCOUNT_ADMIN);
@@ -65,6 +67,7 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
     $aElements += array(
         'store_mode'        => array('store' => 'mode'),
         'store_webDir'      => array('store' => 'webDir'),
+        'store_webSize'     => array('store' => 'webSize'),
         'store_ftpHost'     => array('store' => 'ftpHost'),
         'store_ftpPath'     => array('store' => 'ftpPath'),
         'store_ftpUsername' => array('store' => 'ftpUsername'),
@@ -79,7 +82,7 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
     if (isset($store_webDir)) {
         // Check that the web directory is writable
         if (is_writable($store_webDir)) {
-            //  If web store path has changed, copy the 1x1.gif to the
+            // If web store path has changed, copy the 1x1.gif to the
             // new location, else create it
             if ($conf['store']['webDir'] != $store_webDir) {
                 if (file_exists($conf['store']['webDir'] .'/1x1.gif')) {
@@ -92,6 +95,15 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
             }
         } else {
             $aErrormessage[0][] = $strTypeDirError;
+        }
+    }
+    // Manage the maximum file storage size for web storage
+    phpAds_registerGlobal('store_webSize');
+    if (isset($store_webSize)) {
+        $max_size = RV_Misc_UploadLimits::file_upload_max_size();
+        if (($store_webSize * 1024) > $max_size) {
+            $aErrormessage[0][] = $strTypeWebSizeTooLarge . " " . ($max_size / 1024) . " KB";
+            $aErrormessage[0][] = $strTypeWebSizeTooLargeReview;
         }
     }
     phpAds_registerGlobal('store_ftpHost');
@@ -109,7 +121,7 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
                     if ($store_ftpPassive) {
                         ftp_pasv($ftpsock, true);
                     }
-                	//Check path to ensure there is not a leading slash
+                	// Check path to ensure there is not a leading slash
                     if (($store_ftpPath != "") && (substr($store_ftpPath, 0, 1) == "/")) {
                         $store_ftpPath = substr($store_ftpPath, 1);
                     }
@@ -214,11 +226,33 @@ $aSettings = array(
         'text' 	=> $strTypeWebSettings,
         'items'	=> array (
             array (
+                'type'      => 'text',
+                'name'      => 'store_webSize',
+                'text'      => $strTypeWebSize,
+                'check'     => 'wholeNumber',
+                'depends'   => 'allowedBanners_web==1'
+            ),
+            array (
+                'type'      => 'break'
+            ),
+            array (
+                'type'      => 'checkbox',
+                'name'      => 'store_webSizeWarnOnly',
+                'text'      => $strTypeWebSizeWarnOnly,
+                'depends'   => 'allowedBanners_web==1'
+            ),
+            array (
+                'type'      => 'break',
+                'size'      => 'full'
+            ),
+            array (
                 'type'      => 'select',
                 'name'      => 'store_mode',
                 'text'      => $strTypeWebMode,
-                'items'     => array('local' => $strTypeWebModeLocal,
-                'ftp'       => $strTypeWebModeFtp),
+                'items'     => array(
+                    'local' => $strTypeWebModeLocal,
+                    'ftp'   => $strTypeWebModeFtp
+                ),
                 'depends'   => 'allowedBanners_web==1',
             ),
             array (
