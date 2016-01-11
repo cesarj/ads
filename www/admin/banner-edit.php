@@ -153,8 +153,7 @@ if ($bannerid != '') {
     $aBanner['hardcoded_sources'] = $hardcoded_sources;
     $aBanner['clientid']   = $clientid;
 
-}
-else {
+} else {
     // Set default values for new banner
     $aBanner['bannerid']     = '';
     $aBanner['campaignid']   = $campaignid;
@@ -180,8 +179,8 @@ else {
     $aBanner['hardcoded_links'] = array();
     $aBanner['hardcoded_targets'] = array();
 }
-if ($ext_bannertype)
-{
+
+if ($ext_bannertype) {
     $oComponent = OX_Component::factoryByComponentIdentifier($ext_bannertype);
     //  we may want to use the ancestor class for some sort of generic functionality
     if (!$oComponent)
@@ -190,22 +189,18 @@ if ($ext_bannertype)
     }
     $formDisabled = (!$oComponent || !$oComponent->enabled);
 }
-if ((!$ext_bannertype) && $type && (!in_array($type, array('sql','web','url','html','txt'))))
-{
+
+if ((!$ext_bannertype) && $type && (!in_array($type, array('sql','web','url','html','txt')))) {
     $oComponent = OX_Component::factoryByComponentIdentifier($type);
     $formDisabled = (!$oComponent || !$oComponent->enabled);
-    if ($oComponent)
-    {
+    if ($oComponent) {
         $ext_bannertype = $type;
         $type = $oComponent->getStorageType();
-    }
-    else
-    {
+    } else {
         $ext_bannertype = '';
         $type = '';
     }
 }
-
 
 // If adding a new banner or used storing type is disabled
 // determine which bannertype to show as default
@@ -248,8 +243,7 @@ if ($show_txt) {
     }
 }
 
-if (!$type)
-{
+if (!$type) {
     if ($show_txt)     $type = "txt";
     if ($show_html)    $type = "html";
     if ($show_url)     $type = "url";
@@ -261,20 +255,16 @@ if (!$type)
 $form = buildBannerForm($type, $aBanner, $oComponent, $formDisabled);
 
 $valid = $form->validate();
-if ($valid && $oComponent && $oComponent->enabled)
-{
+if ($valid && $oComponent && $oComponent->enabled) {
     $valid = $oComponent->validateForm($form);
 }
-if ($valid)
-{
+if ($valid) {
     //process submitted values
     processForm($bannerid, $form, $oComponent, $formDisabled);
-}
-else { //either validation failed or form was not submitted, display the form
+} else {
+    //either validation failed or form was not submitted, display the form
     displayPage($bannerid, $campaignid, $clientid, $bannerTypes, $aBanner, $type, $form, $ext_bannertype, $formDisabled);
 }
-
-
 
 function displayPage($bannerid, $campaignid, $clientid, $bannerTypes, $aBanner, $type, $form, $ext_bannertype, $formDisabled=false)
 {
@@ -336,6 +326,11 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
     if ($type == 'sql' || $type == 'web') {
         $form->addElement('custom', 'banner-iab-note', null, null);
     }
+    if ($type == 'web') {
+        $form->addElement('custom', 'banner-size-warning', null, null);
+        $form->addElement('custom', 'banner-size-note', null, null);
+    }
+
     if ($aBanner['contenttype'] == 'swf' && empty($aBanner['alt_contenttype']) && empty($aBanner['alt_imageurl'])) {
         $form->addElement('custom', 'banner-backup-note', null, null);
     }
@@ -343,8 +338,7 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
     $form->addElement('header', 'header_basic', $GLOBALS['strBasicInformation']);
     if (OA_Permission::isAccount(OA_ACCOUNT_ADMIN) || OA_Permission::isAccount(OA_ACCOUNT_MANAGER)) {
         $form->addElement('text', 'description', $GLOBALS['strName']);
-    }
-    else {
+    } else {
         $form->addElement('static', 'description', $GLOBALS['strName'], $aBanner['description']);
     }
 
@@ -352,8 +346,7 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
     if ($type == 'sql' || $type == 'web') {
         if ($type == 'sql') {
             $header = $form->createElement('header', 'header_sql', $GLOBALS['strMySQLBanner']." -  banner creative");
-        }
-        else {
+        } else {
             $header = $form->createElement('header', 'header_sql', $GLOBALS['strWebBanner']." -  banner creative");
         }
         $header->setAttribute('icon', 'icon-banner-stored.gif');
@@ -362,41 +355,56 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
         $imageName = _getContentTypeIconImageName($aBanner['contenttype']);
         $size = _getBannerSizeText($type, $aBanner['filename']);
 
-        addUploadGroup($form, $aBanner,
-            array(
-                'uploadName' => 'upload',
-                'radioName' => 'replaceimage',
-                'imageName'  => $imageName,
-                'fileName'  => $aBanner['filename'],
-                'fileSize'  => $size,
-                'newLabel'  => $GLOBALS['strNewBannerFile'],
-                'updateLabel'  => $GLOBALS['strUploadOrKeep'],
-                'handleSWF' => true
-              )
-        );
+        // Add the initial upload group, which may be for a SWF file (or a
+        // non-SWF file)
+        $aUploadParams = array(
+                'uploadName'    => 'upload',
+                'radioName'     => 'replaceimage',
+                'imageName'     => $imageName,
+                'fileName'      => $aBanner['filename'],
+                'fileSize'      => $size,
+                'newLabel'      => $GLOBALS['strNewBannerFile'],
+                'updateLabel'   => $GLOBALS['strUploadOrKeep'],
+                'handleSWF'     => true
+              );
+        $aConf = $GLOBALS['_MAX']['CONF'];
+        if ($type == 'web' && !empty($aConf['store']['webWarnMaxSize'])) {
+            $aUploadParams['webWarnMaxSize'] = $aConf['store']['webWarnMaxSize'];
+        }
+        if ($type == 'web' && !empty($aConf['store']['webHardMaxSize'])) {
+            $aUploadParams['webHardMaxSize'] = $aConf['store']['webHardMaxSize'];
+        }
+        addUploadGroup($form, $aBanner, $aUploadParams);
 
+        // Prepare for and add the secondary upload group, in the event that
+        // the initial creative is an SWF file
         $altImageName = null;
         $altSize = null;
         if ($aBanner['contenttype'] == 'swf') {
             $altImageName = _getContentTypeIconImageName($aBanner['alt_contenttype']);
             $altSize = _getBannerSizeText($type, $aBanner['alt_filename']);
         }
-
         $aUploadParams = array(
-                'uploadName' => 'uploadalt',
-                'radioName' => 'replacealtimage',
-                'imageName'  => $altImageName,
-                'fileSize'  => $altSize,
-                'fileName'  => $aBanner['alt_filename'],
-                'newLabel'  => $GLOBALS['strNewBannerFileAlt'],
-                'updateLabel'  => $GLOBALS['strUploadOrKeep'],
-                'handleSWF' => false
+                'uploadName'    => 'uploadalt',
+                'radioName'     => 'replacealtimage',
+                'imageName'     => $altImageName,
+                'fileSize'      => $altSize,
+                'fileName'      => $aBanner['alt_filename'],
+                'newLabel'      => $GLOBALS['strNewBannerFileAlt'],
+                'updateLabel'   => $GLOBALS['strUploadOrKeep'],
+                'handleSWF'     => false
               );
-
+        if ($type == 'web' && !empty($aConf['store']['webWarnMaxSize'])) {
+            $aUploadParams['webWarnMaxSize'] = $aConf['store']['webWarnMaxSize'];
+        }
+        if ($type == 'web' && !empty($aConf['store']['webHardMaxSize'])) {
+            $aUploadParams['webHardMaxSize'] = $aConf['store']['webHardMaxSize'];
+        }
         if ($aBanner['contenttype'] != 'swf') {
             $aUploadParams = array_merge($aUploadParams, array('decorateId' => 'swfAlternative'));
         }
         addUploadGroup($form, $aBanner, $aUploadParams);
+
 
         $form->addElement('header', 'header_b_links', "Banner link");
         if (count($aBanner['hardcoded_links']) == 0) {
@@ -404,8 +412,7 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
             $targetElem = $form->createElement('text', 'target', $GLOBALS['strTarget']);
             $targetElem->setAttribute('maxlength', '16');
             $form->addElement($targetElem);
-        }
-        else {
+        } else {
             foreach ($aBanner['hardcoded_links'] as $key => $val) {
                 $link['text'] = $form->createElement('text', "alink[".$key."]", null);
                 $link['text']->setAttribute("style", "width:330px");
@@ -454,8 +461,6 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
         {
             $form->addElement('checkbox', 'transparent', $GLOBALS['strSwfTransparency'], $GLOBALS['strSwfTransparency']);
         }
-
-        //TODO $form->addRule("size", 'Please enter a number', 'numeric'); //this should make all fields in group size are numeric
     }
 
     //external banners
@@ -531,7 +536,6 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
         $form->addRule('weight', $weightPositiveRule, 'numeric');
     }
 
-
     //we want submit to be the last element in its own separate section
     $form->addElement('controls', 'form-controls');
     $form->addElement('submit', 'submit', 'Save changes');
@@ -559,8 +563,7 @@ function buildBannerForm($type, $aBanner, &$oComponent=null, $formDisabled=false
         }
     }
     $form->setDefaults($swfLinks);
-    if ($formDisabled)
-    {
+    if ($formDisabled) {
         $form->freeze();
     }
 
@@ -572,40 +575,36 @@ function addUploadGroup($form, $aBanner, $vars)
 {
         $uploadG = array();
         if (isset($vars['fileName']) && $vars['fileName'] != '') {
+            // Upload group to replace an existing banner creative
             $uploadG['radio1'] = $form->createElement('radio', $vars['radioName'], null, (empty($vars['imageName']) ? '' : "<img src='".OX::assetPath()."/images/".$vars['imageName']."' align='absmiddle'> ").$vars['fileName']." <i dir=".$GLOBALS['phpAds_TextDirection'].">(".$vars['fileSize'].")</i>", 'f');
             $uploadG['radio2'] = $form->createElement('radio', $vars['radioName'], null, null, 't');
-            $uploadG['upload'] = $form->createElement('file', $vars['uploadName'], null, array("onchange" => "selectFile(this, ".($vars['handleSWF'] ? 'true' : 'false').")", "style" => "width: 250px;"));
+            $uploadG['upload'] = $form->createElement('file', $vars['uploadName'], null, array("onchange" => "selectFile(this, ".($vars['handleSWF'] ? 'true' : 'false').", ".$vars['webWarnMaxSize'].", ".$vars['webHardMaxSize'].")", "style" => "width: 250px;"));
             if ($vars['handleSWF']) {
                 $uploadG['checkSWF'] = $form->createElement("checkbox", "checkswf", null, $GLOBALS['strCheckSWF']);
                 $form->addDecorator('checkswf', 'tag',
                     array('attributes' =>
                         array('id' => 'swflayer', 'style' => 'display:none')));
             }
-
             $form->addGroup($uploadG, $vars['uploadName'].'_group', $vars['updateLabel'], array("<br>", "", "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), false);
-        }
-        else { //add new creative
+        } else {
+            // Upload group to add a new banner creative
             $uploadG['hidden'] = $form->createElement("hidden", $vars['radioName'], "t");
-            $uploadG['upload'] = $form->createElement('file', $vars['uploadName'], null, array("onchange" => "selectFile(this, ".($vars['handleSWF'] ? 'true' : 'false').")", "size" => 26, "style" => "width: 250px"));
+            $uploadG['upload'] = $form->createElement('file', $vars['uploadName'], null, array("onchange" => "selectFile(this, ".($vars['handleSWF'] ? 'true' : 'false').", ".$vars['webWarnMaxSize'].", ".$vars['webHardMaxSize'].")", "size" => 26, "style" => "width: 250px"));
             if ($vars['handleSWF']) {
                 $uploadG['checkSWF'] = $form->createElement("checkbox", "checkswf", null, $GLOBALS['strCheckSWF']);
                 $form->addDecorator('checkswf', 'tag',
                     array('attributes' =>
                         array('id' => 'swflayer', 'style' => 'display:none')));
             }
-
             $form->addGroup($uploadG, $vars['uploadName'].'_group', $vars['newLabel'], "<br>", false);
-
             if (!empty($vars['decorateId'])) {
                 $form->addDecorator($vars['uploadName'].'_group', 'process', array('tag' => 'tr',
                     'addAttributes' => array('id' => $vars['decorateId'].'{numCall}',
                     'style' => 'display:none')));
             }
-
         }
         $form->setDefaults(array("checkswf" => "t")); //TODO does not work??
 }
-
 
 function processForm($bannerid, $form, &$oComponent, $formDisabled=false)
 {
@@ -737,11 +736,6 @@ function processForm($bannerid, $form, &$oComponent, $formDisabled=false)
                     $aVariables['target'] = $aFields['atar'][$key];
                 }
 
-/*
-                if (isset($aFields['asource'][$key]) && $aFields['asource'][$key] != '') {
-                    $val .= '|source:'.$aFields['asource'][$key];
-                }
-*/
                 $parameters_complete[$key] = array(
                     'link' => $val,
                     'tar'  => $aFields['atar'][$key]
@@ -882,11 +876,9 @@ function _getBannerSizeText($type, $filename)
     $size = phpAds_ImageSize($type, $filename);
     if (round($size / 1024) == 0) {
          $size = $size." bytes";
-    }
-    else {
+    } else {
          $size = round($size / 1024)." Kb";
     }
-
     return $size;
 }
 

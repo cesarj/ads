@@ -7,7 +7,7 @@
 | Copyright: See the COPYRIGHT.txt file.                                    |
 | License: GPLv2 or later, see the LICENSE.txt file.                        |
 +---------------------------------------------------------------------------+
-  
+
 -->*}
 {if !$bannerId}
 <form action='banner-edit.php' method='POST'>
@@ -62,25 +62,25 @@
 {/if}
 
 {literal}
-    function selectFile(o, handleSWF)
+    function selectFile(o, handleSWF, webWarnMaxSize, webHardMaxSize)
     {
         var filename = o.value.toLowerCase();
-        var bannerForm = findObj ('bannerForm');
+        var bannerForm = findObj('bannerForm');
         $(o).siblings('input[value=t]').attr('checked', true);
 
         if (handleSWF) {
             // Show SWF Layer
-            var swflayer = findObj ('swflayer');
-            var swfAlternate1 = findObj ('swfAlternative1');
-            var swfAlternate2 = findObj ('swfAlternative2');
-            var iab_rmedia_note = findObj ('iab_rmedia_note');
+            var swflayer = findObj('swflayer');
+            var swfAlternate1 = findObj('swfAlternative1');
+            var swfAlternate2 = findObj('swfAlternative2');
+            var iab_rmedia_note = findObj('iab_rmedia_note');
 
             if (swflayer) {
                 if (filename.indexOf('swf') + 3 == filename.length) {
                     swflayer.style.display = '';
                     swfAlternate1.style.display = '';
                     swfAlternate2.style.display = '';
-                    iab_rmedia_note.style.display = ''; 
+                    iab_rmedia_note.style.display = '';
                 } else {
                     swflayer.style.display = 'none';
                     swfAlternate1.style.display = 'none';
@@ -90,16 +90,33 @@
             }
         }
 
+        if (window.File && window.FileReader) {
+            var hard_size_warning = findObj('hard_size_warning');
+            hard_size_warning.style.display = 'none';
+            var soft_size_note = findObj('soft_size_note');
+            soft_size_note.style.display = 'none';
+            var testSoftWarning = true;
+            if (webHardMaxSize > 0 && (o.files[0].size > (webHardMaxSize * 1024))) {
+                // There is a hard size configured, and the file is too
+                // large; display the hard warning, but not the soft warning
+                hard_size_warning.style.display = '';
+                testSoftWarning = false;
+            }
+            if (webWarnMaxSize > 0 && testSoftWarning && (o.files[0].size > (webWarnMaxSize * 1024))) {
+                // There is a soft size configured, the soft size should
+                // not be masked by a hard size already found, and the
+                // file is too large; display the soft warning
+                soft_size_note.style.display = '';
+            }
+        }
+
     }
 
     function oa_sizeChangeUpdateMessage(id)
     {
-        if (document.bannerWidth != document.bannerForm.width.value ||
-            document.bannerHeight !=  document.bannerForm.height.value) {
-                oa_show(id);
-
-        } else if (document.bannerWidth == document.bannerForm.width.value &&
-                   document.bannerHeight ==  document.bannerForm.height.value) {
+        if (document.bannerWidth != document.bannerForm.width.value || document.bannerHeight != document.bannerForm.height.value) {
+            oa_show(id);
+        } else if (document.bannerWidth == document.bannerForm.width.value && document.bannerHeight == document.bannerForm.height.value) {
             oa_hide(id);
         }
     }
@@ -118,6 +135,3 @@
 {/literal}
 //-->
 </script>
-
-
-

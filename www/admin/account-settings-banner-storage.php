@@ -65,14 +65,15 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
     );
     // Webserver Local Banner Storage Settings
     $aElements += array(
-        'store_mode'        => array('store' => 'mode'),
-        'store_webDir'      => array('store' => 'webDir'),
-        'store_webSize'     => array('store' => 'webSize'),
-        'store_ftpHost'     => array('store' => 'ftpHost'),
-        'store_ftpPath'     => array('store' => 'ftpPath'),
-        'store_ftpUsername' => array('store' => 'ftpUsername'),
-        'store_ftpPassword' => array('store' => 'ftpPassword'),
-        'store_ftpPassive'  => array(
+        'store_mode'            => array('store' => 'mode'),
+        'store_webDir'          => array('store' => 'webDir'),
+        'store_webWarnMaxSize'  => array('store' => 'webWarnMaxSize'),
+        'store_webHardMaxSize'  => array('store' => 'webHardMaxSize'),
+        'store_ftpHost'         => array('store' => 'ftpHost'),
+        'store_ftpPath'         => array('store' => 'ftpPath'),
+        'store_ftpUsername'     => array('store' => 'ftpUsername'),
+        'store_ftpPassword'     => array('store' => 'ftpPassword'),
+        'store_ftpPassive'      => array(
             'store' => 'ftpPassive',
             'bool'  => 'true'
         )
@@ -98,12 +99,26 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
         }
     }
     // Manage the maximum file storage size for web storage
-    phpAds_registerGlobal('store_webSize');
-    if (isset($store_webSize)) {
-        $max_size = RV_Misc_UploadLimits::file_upload_max_size();
-        if (($store_webSize * 1024) > $max_size) {
-            $aErrormessage[0][] = $strTypeWebSizeTooLarge . " " . ($max_size / 1024) . " KB";
-            $aErrormessage[0][] = $strTypeWebSizeTooLargeReview;
+    phpAds_registerGlobal('store_webWarnMaxSize');
+    phpAds_registerGlobal('store_webHardMaxSize');
+    $max_size = RV_Misc_UploadLimits::file_upload_max_size();
+    if (isset($store_webWarnMaxSize) && isset($store_webHardMaxSize)) {
+        if (!(empty($store_webWarnMaxSize) && empty($store_webHardMaxSize))) {
+            if ($store_webWarnMaxSize >= $store_webHardMaxSize) {
+                $aErrormessage[0][] = $strTypeWebWarnMaxSizeLarger;
+            }
+        }
+    }
+    if (isset($store_webWarnMaxSize)) {
+        if (($store_webWarnMaxSize * 1024) > $max_size) {
+            $aErrormessage[0][] = $strTypeWebWarnMaxSizeTooLarge . " " . ($max_size / 1024) . " KB";
+            $aErrormessage[0][] = $strTypeWebMaxSizeTooLargeReview;
+        }
+    }
+    if (isset($store_webHardMaxSize)) {
+        if (($store_webHardMaxSize * 1024) > $max_size) {
+            $aErrormessage[0][] = $strTypeWebHardMaxSizeTooLarge . " " . ($max_size / 1024) . " KB";
+            $aErrormessage[0][] = $strTypeWebMaxSizeTooLargeReview;
         }
     }
     phpAds_registerGlobal('store_ftpHost');
@@ -227,8 +242,8 @@ $aSettings = array(
         'items'	=> array (
             array (
                 'type'      => 'text',
-                'name'      => 'store_webSize',
-                'text'      => $strTypeWebSize,
+                'name'      => 'store_webWarnMaxSize',
+                'text'      => $strTypeWebWarnMaxSize . ($max_size / 1024) . " KB",
                 'check'     => 'wholeNumber',
                 'depends'   => 'allowedBanners_web==1'
             ),
@@ -236,9 +251,10 @@ $aSettings = array(
                 'type'      => 'break'
             ),
             array (
-                'type'      => 'checkbox',
-                'name'      => 'store_webSizeWarnOnly',
-                'text'      => $strTypeWebSizeWarnOnly,
+                'type'      => 'text',
+                'name'      => 'store_webHardMaxSize',
+                'text'      => $strTypeWebHardMaxSize . ($max_size / 1024) . " KB",
+                'check'     => 'wholeNumber',
                 'depends'   => 'allowedBanners_web==1'
             ),
             array (

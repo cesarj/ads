@@ -209,7 +209,7 @@ function phpAds_ImageDelete ($type, $name)
 /* Get size of the file                                  */
 /*-------------------------------------------------------*/
 
-function phpAds_ImageSize ($type, $name)
+function phpAds_ImageSize($type, $name)
 {
 	$aConf = $GLOBALS['_MAX']['CONF'];
 	// Strip existing path
