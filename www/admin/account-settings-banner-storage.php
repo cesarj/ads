@@ -33,6 +33,8 @@ $prefSection = "banner-storage";
 // Prepare an array for storing error messages
 $aErrormessage = array();
 
+$max_size = RV_Misc_UploadLimits::file_upload_max_size();
+
 // If the settings page is a submission, deal with the form data
 if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
     // Prepare an array of the HTML elements to process, and the
@@ -101,7 +103,6 @@ if (isset($_POST['submitok']) && $_POST['submitok'] == 'true') {
     // Manage the maximum file storage size for web storage
     phpAds_registerGlobal('store_webWarnMaxSize');
     phpAds_registerGlobal('store_webHardMaxSize');
-    $max_size = RV_Misc_UploadLimits::file_upload_max_size();
     if (isset($store_webWarnMaxSize) && isset($store_webHardMaxSize)) {
         if (!(empty($store_webWarnMaxSize) && empty($store_webHardMaxSize))) {
             if ($store_webWarnMaxSize >= $store_webHardMaxSize) {
