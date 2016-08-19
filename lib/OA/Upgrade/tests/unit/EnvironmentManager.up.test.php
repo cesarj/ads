@@ -484,57 +484,57 @@ class Test_OA_Environment_Manager extends UnitTestCase
         if (in_array('memory_limit', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['memory_limit']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['memory_limit']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['memory_limit']));
         }
         if (in_array('memory_limit', $aWarnings)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['warning']['memory_limit']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['warning']['memory_limit']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['warning']['memory_limit']));
         }
         if (in_array('safe_mode', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['safe_mode']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['safe_mode']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['safe_mode']));
         }
         if (in_array('magic_quotes_runtime', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['magic_quotes_runtime']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['magic_quotes_runtime']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['magic_quotes_runtime']));
         }
         if (in_array('file_uploads', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['file_uploads']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['file_uploads']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['file_uploads']));
         }
         if (in_array('pcre', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['pcre']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['pcre']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['pcre']));
         }
         if (in_array('xml', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['xml']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['xml']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['xml']));
         }
         if (in_array('zlib', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['zlib']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['zlib']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['zlib']));
         }
         if (in_array('mysql', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['mysql']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['mysql']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['mysql']));
         }
         if (in_array('spl', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error']['spl']);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error']['spl']);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error']['spl']));
         }
         if (in_array('OA_ENV_ERROR_PHP_TIMEOUT', $aErrors)) {
             $this->assertNotNull($oEnvironmentManager->aInfo['PHP']['error'][OA_ENV_ERROR_PHP_TIMEOUT]);
         } else {
-            $this->assertNull($oEnvironmentManager->aInfo['PHP']['error'][OA_ENV_ERROR_PHP_TIMEOUT]);
+            $this->assertTrue(!isset($oEnvironmentManager->aInfo['PHP']['error'][OA_ENV_ERROR_PHP_TIMEOUT]));
         }
     }
 

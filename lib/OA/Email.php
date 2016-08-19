@@ -41,7 +41,7 @@ class OA_Email
         $aConf = $GLOBALS['_MAX']['CONF'];
 
         $aAdvertiserPrefs = OA_Preferences::loadAccountPreferences($aAdvertiser['account_id'], true);
-        $oTimezone = new Date_Timezone($aAdvertiserPrefs['timezone']);
+        $oTimezone = new Date_Timezone(isset($aAdvertiserPrefs['timezone']) ? $aAdvertiserPrefs['timezone'] : 'UTC');
 
         $this->convertStartEndDate($oStartDate, $oEndDate, $oTimezone);
 

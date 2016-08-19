@@ -77,11 +77,11 @@ schema                              =
 ;------------------------------------------------------------------------------------------;
 
 [webpath]
-admin                               =
-delivery                            =
-deliverySSL                         =
-images                              =
-imagesSSL                           =
+admin                               = test/a
+delivery                            = test/d
+deliverySSL                         = test/d
+images                              = test/i
+imagesSSL                           = test/i
 
 [file]
 asyncjs                             = asyncjs.php

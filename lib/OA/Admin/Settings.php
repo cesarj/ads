@@ -82,6 +82,9 @@ class OA_Admin_Settings
         if (!$configFile) {
             $conf = $GLOBALS['_MAX']['CONF'];
             $url = @parse_url('http://' . $conf['webpath']['delivery']);
+            if (!isset($url['host'])) {
+                return false;
+            }
             $configFile = MAX_PATH . '/var/' . $url['host'] . '.conf.php';
         }
         if (file_exists($configFile)) {
@@ -173,19 +176,14 @@ class OA_Admin_Settings
 
         // What were the old host names used for the installation?
         $aConf = $GLOBALS['_MAX']['CONF'];
-        $url = @parse_url('http://' . $aConf['webpath']['admin']);
-        $oldAdminHost = $url['host'];
-        $url = @parse_url('http://' . $aConf['webpath']['delivery']);
-        $oldDeliveryHost = $url['host'];
-        $url = @parse_url('http://' . $aConf['webpath']['deliverySSL']);
-        $oldDeliverySslHost = $url['host'];
+        $oldAdminHost = $this->parseHostname($aConf['webpath']['admin']);
+        $oldDeliveryHost = $this->parseHostname($aConf['webpath']['delivery']);
+        $oldDeliverySslHost = $this->parseHostname($aConf['webpath']['deliverySSL']);
+
         // What are the new host names used for the installation?
-        $url = @parse_url('http://' . $this->aConf['webpath']['admin']);
-        $newAdminHost = $url['host'];
-        $url = @parse_url('http://' . $this->aConf['webpath']['delivery']);
-        $newDeliveryHost = $url['host'];
-        $url = @parse_url('http://' . $this->aConf['webpath']['deliverySSL']);
-        $newDeliverySslHost = $url['host'];
+        $newAdminHost = $this->parseHostname($this->aConf['webpath']['admin']);
+        $newDeliveryHost = $this->parseHostname($this->aConf['webpath']['delivery']);
+        $newDeliverySslHost = $this->parseHostname($this->aConf['webpath']['deliverySSL']);
 
         // Prepare config arrays
         $adminConfig = $deliverySslConfig = array('realConfig' => $newDeliveryHost);
@@ -399,12 +397,9 @@ class OA_Admin_Settings
 
         if (!is_null($configPath) && is_dir($configPath)) {
             // Enumerate any valid config files for this installation
-            $url = @parse_url('http://' . $this->aConf['webpath']['admin']);
-            $hosts[] = $url['host'] . $configFile . '.conf.php';
-            $url = @parse_url('http://' . $this->aConf['webpath']['delivery']);
-            $hosts[] = $url['host'] . $configFile . '.conf.php';
-            $url = @parse_url('http://' . $this->aConf['webpath']['deliverySSL']);
-            $hosts[] = $url['host'] . $configFile . '.conf.php';
+            $hosts[] = $this->parseHostname($this->aConf['webpath']['admin']) . $configFile . '.conf.php';
+            $hosts[] = $this->parseHostname($this->aConf['webpath']['delivery']) . $configFile . '.conf.php';
+            $hosts[] = $this->parseHostname($this->aConf['webpath']['deliverySSL']) . $configFile . '.conf.php';
 
             $aFiles = array();
             $CONFIG_DIR = opendir($configPath);
@@ -638,6 +633,21 @@ class OA_Admin_Settings
         return $writeResult;
     }
 
-}
+    /**
+     * A method to parse a webpath and return the hostname component.
+     *
+     * @param $webPath
+     *
+     * @return string|false
+     */
+    protected function parseHostname($webPath) {
+        $url = @parse_url("http://{$webPath}");
 
-?>
+        if (!isset($url['host'])) {
+            throw new \InvalidArgumentException("Invalid webpath");
+        }
+
+        return $url['host'];
+    }
+
+}

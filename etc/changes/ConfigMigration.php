@@ -66,9 +66,11 @@ class ConfigMigration
         	unset($GLOBALS['_MAX']['CONF'][$module]);
         }
     	$conf = MAX_Plugin::getConfig($module);
-        $aConfig = MAX_Plugin::getConfig($module, $conf['type']);
-        if (is_array($aConfig)) {
-            $conf = array_merge($conf, $aConfig);
+        if (isset($conf['type'])) {
+            $aConfig = MAX_Plugin::getConfig($module, $conf['type']);
+            if (is_array($aConfig)) {
+                $conf = array_merge($conf, $aConfig);
+            }
         }
         return $conf;
     }

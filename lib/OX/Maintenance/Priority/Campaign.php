@@ -295,10 +295,10 @@ class OX_Maintenance_Priority_Campaign
     function setSummaryStatisticsToDate()
     {
         $aStats = $this->oMaxDalMaintenancePriority->getCampaignStats($this->id, false);
-        $this->deliveredRequests    = (int)$aStats['sum_requests'];
-        $this->deliveredImpressions = (int)$aStats['sum_views'];
-        $this->deliveredClicks      = (int)$aStats['sum_clicks'];
-        $this->deliveredConversions = (int)$aStats['sum_conversions'];
+        $this->deliveredRequests    = isset($aStats['sum_requests']) ? (int)$aStats['sum_requests'] : 0;
+        $this->deliveredImpressions = isset($aStats['sum_views']) ? (int)$aStats['sum_requests'] : 0;
+        $this->deliveredClicks      = isset($aStats['sum_clicks']) ? (int)$aStats['sum_requests'] : 0;
+        $this->deliveredConversions = isset($aStats['sum_conversions']) ? (int)$aStats['sum_requests'] : 0;
     }
 
     /**
@@ -311,10 +311,10 @@ class OX_Maintenance_Priority_Campaign
     function setSummaryStatisticsToday($today)
     {
         $aStats = $this->oMaxDalMaintenancePriority->getCampaignStats($this->id, true, $today);
-        $this->deliveredRequests    = (int)$aStats['sum_requests'];
-        $this->deliveredImpressions = (int)$aStats['sum_views'];
-        $this->deliveredClicks      = (int)$aStats['sum_clicks'];
-        $this->deliveredConversions = (int)$aStats['sum_conversions'];
+        $this->deliveredRequests    = isset($aStats['sum_requests']) ? (int)$aStats['sum_requests'] : 0;
+        $this->deliveredImpressions = isset($aStats['sum_views']) ? (int)$aStats['sum_requests'] : 0;
+        $this->deliveredClicks      = isset($aStats['sum_clicks']) ? (int)$aStats['sum_requests'] : 0;
+        $this->deliveredConversions = isset($aStats['sum_conversions']) ? (int)$aStats['sum_requests'] : 0;
     }
 
     /**

@@ -236,7 +236,7 @@ class OX_PluginManager extends OX_Plugin_ComponentGroupManager
         $this->_switchToPluginLog();
         try {
             if ($this->configLocked) {
-                throw new Exception('Configuration file is locked unable to unpack'.$aFile['name']);
+                throw new Exception('Configuration file is locked unable to unpack '.$aFile['name']);
             }
             if (!@file_exists ($aFile['tmp_name']))
             {
