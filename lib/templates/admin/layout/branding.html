@@ -10,11 +10,15 @@
 
 -->*}
 {if $applicationName && $logoFileUrl}
-    <div id="oaHeaderBranding" class="brandingCustom"><img src="{$logoFileUrl|escape}" alt="{$applicationName|escape}" /></div>
+    <div id="oaHeaderBranding" class="brandingCustom">
+        {if $applicationNameLink}<a href="{$applicationNameLink}">{/if}<img src="{$logoFileUrl|escape}" alt="{$applicationName|escape}" />{if $applicationNameLink}</a>{/if}
+    </div>
 {elseif $applicationName}
-    <div id="oaHeaderBranding" class="brandingName">{$applicationName|escape}</div>
+    <div id="oaHeaderBranding" class="brandingName">
+        {if $applicationNameLink}<a href="{$applicationNameLink}">{/if}{$applicationName|escape}{if $applicationNameLink}</a>{/if}
+    </div>
 {elseif $logoFileUrl}
-    <div id="oaHeaderBranding" class="brandingCustom"><img src="{$logoFileUrl|escape}" alt="{$productName}" /></div>
-{else}
-    <div id="oaHeaderBranding" class="brandingAdServer">{$productName}</div>
+    <div id="oaHeaderBranding" class="brandingCustom">
+        {if $applicationNameLink}<a href="{$applicationNameLink}">{/if}<img src="{$logoFileUrl|escape}" alt="{$productName}" />{if $applicationNameLink}</a>{/if}
+    </div>
 {/if}

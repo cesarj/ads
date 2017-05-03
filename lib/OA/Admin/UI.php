@@ -396,6 +396,8 @@ class OA_Admin_UI
             } else {
                 $this->oTpl->assign('logoFileUrl', OX::assetPath('images/' . $aConf['logoFilePath']));
             }
+        } else {
+            $this->oTpl->assign('logoFileUrl', OX::assetPath('images/logo-adserver.png'));
         }
 
         if (!empty($aConf['headerForegroundColor'])) {
