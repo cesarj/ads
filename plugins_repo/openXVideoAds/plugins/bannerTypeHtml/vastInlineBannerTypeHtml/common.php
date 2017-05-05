@@ -208,8 +208,6 @@ class VideoAdsHelper
 
     static function getLinkCrossdomainExample()
     {
-        return 'http://documentation.revive-adserver.com/display/DOCS/Server+Cross+Domain+Policy';
+        return 'https://raw.githubusercontent.com/revive-adserver/revive-adserver/master/www/delivery_dev/crossdomain.xml';
     }
-
-    
 }
