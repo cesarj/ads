@@ -61,7 +61,8 @@ function init()
     setupConfigVariables();
 
     // Bootstrap PSR Autoloader and DI container
-    $GLOBALS['_MAX']['DI'] = include MAX_PATH.'/bootstrap.php';
+    require MAX_PATH.'/lib/vendor/autoload.php';
+    $GLOBALS['_MAX']['DI'] = new \RV\Container($GLOBALS['_MAX']['CONF']);
 
     // Disable all notices and warnings, as lots of code still
     // generates PHP warnings - especially E_STRICT notices from PEAR

@@ -30,7 +30,7 @@ setupConfigVariables();
 $GLOBALS['_MAX']['CONF']['store']['webDir'] = MAX_PATH.'/var';
 
 // Set up DI container
-$GLOBALS['_MAX']['DI'] = new \RV\Container($GLOBALS['_MAX']['CONF'], 'test', true);
+$GLOBALS['_MAX']['DI'] = new \RV\Container($GLOBALS['_MAX']['CONF'], false, 'test', true);
 
 /**
  * The environment initialisation function for the OpenX testing environment.

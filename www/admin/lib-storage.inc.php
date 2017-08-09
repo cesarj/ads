@@ -122,7 +122,7 @@ function phpAds_ImageRetrieve($type, $name)
 
 
     try {
-        return $filesystem->get($name);
+        return $filesystem->read($name);
     } catch (\Exception $e) {
         // The previous behaviour was to ignore errors, so that's what we do here too
     }
