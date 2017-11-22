@@ -79,7 +79,6 @@ content                             = ac.php
 conversion                          = ti.php
 conversionjs                        = tjs.php
 flash                               = fl.js
-google                              = ag.php
 frame                               = afr.php
 image                               = ai.php
 js                                  = ajs.php
